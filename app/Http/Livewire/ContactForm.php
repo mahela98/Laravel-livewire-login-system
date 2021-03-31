@@ -11,7 +11,28 @@ class ContactForm extends Component
     public $email = '';
     public $message = '';
 
+    protected $rules = [
+        // validating form
+    'name' => 'required|min:6',
+    'email' => 'required|email',
+    'message' => 'required'
+
+    ];
+    protected $messages = [
+        // custome error message
+        'name.required' => 'your name is required A###',
+    ];
+
+public function updated($propatyName){
+    // validate on the fly
+    $this->validateOnly($propatyName);
+}
+
+
     public function saveMessage(){
+
+        $this->validate();
+
         Message::create([
             'name' => $this->name,
             'email' => $this->email,
