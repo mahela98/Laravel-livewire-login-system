@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Message;
+use App\Mail\contactformMail;
+use Illuminate\support\facades\Mail;
 
 class ContactForm extends Component
 {
@@ -38,6 +40,9 @@ public function updated($propatyName){
             'email' => $this->email,
             'message' => $this->message,
         ]);
+
+        Mail::to('ouremail@test.com')-> send(new contactformMail($this->name,$this->email,$this->message));
+
         $this->name = '';
         $this->email = '';
         $this->message = '';
